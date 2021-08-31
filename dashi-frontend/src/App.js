@@ -8,9 +8,6 @@ import TitleBar from './components/TitleBar'
 
 const App = () => {
   const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState({})
 
   const nickNames = [
     'Ning sa baby', 'Tarduncle',
@@ -26,7 +23,7 @@ const App = () => {
   if(name === ''){
     return (
       <div>
-        Loading
+        Loading...
       </div>
     )
   }
