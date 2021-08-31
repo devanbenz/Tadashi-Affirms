@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+html{
+  background-color: rgb(255, 230, 234);
+}
+
+.name {
+  font-family: 'Pacifico', cursive;
+  font-size: 5em;
+  color: rgb(0, 214, 214);
+  margin: auto;
+  text-align: center;
+}
+
+.login {
+  margin-left: 43%;
+  margin-right: 43%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  text-align: center;
+  border: 3px solid rgb(0, 214, 214);
+  border-radius: 1%;
+}
+
+.login-input{
+  margin: 1%;
+}
+
+.login-btn{
+  margin: 0.5%;
+}
