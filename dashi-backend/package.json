@@ -6,10 +6,15 @@
   "author": "devanbenz",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.980.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "scripts": {
+    "dev":"nodemon -L index.js"
   }
 }

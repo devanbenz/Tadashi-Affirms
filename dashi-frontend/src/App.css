@@ -14,10 +14,18 @@ html{
   text-align: center;
 }
 
+.sml {
+  width: 10%;
+  height: 10%;
+}
+
+.usr-img {
+  size: 10%;
+}
+
 .login-btn{
   position: absolute;
-  right: 10%;
-  top: 10%;
+  top: 2%;
   display: inline-block;
   padding:0.35em 1.2em;
   border:0.1em solid #FFFFFF;

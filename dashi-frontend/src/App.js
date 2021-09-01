@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import LoginForm from './components/LoginForm'
 import './App.css'
-import LoginButton from './components/LoginButton'
-import LogoutButton from './components/LogoutButton'
-import Profile from './components/Profile'
 import TitleBar from './components/TitleBar'
+import { getAll } from './service/photoService'
 
 const App = () => {
   const [name, setName] = useState('')
+  const [photos, setPhotos] = useState({})
 
   const nickNames = [
     'Ning sa baby', 'Tarduncle',
@@ -19,6 +17,13 @@ const App = () => {
   useEffect(() => {
     setName(nickNames[Math.floor(Math.random()*nickNames.length)])
   }, [])
+
+  useEffect(() => {
+    ;(async () => {
+      const pics = await getAll()
+      console.log(pics)
+    })()
+  },[])
 
   if(name === ''){
     return (
