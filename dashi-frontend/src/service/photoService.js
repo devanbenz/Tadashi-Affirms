@@ -1,6 +1,8 @@
 const getAll = async () => {
     try{
-        const req = await fetch('/api/photos',{headers:{'Content-Type':'application/json'}})
+        const req = await fetch('/api/photos',{
+            headers:{'Content-Type':'application/json'}
+        })
         if(!req.ok){
             throw Error
         }
@@ -10,6 +12,24 @@ const getAll = async () => {
     }
 }
 
+const upload = async (fileToUpload) => {
+    try{
+        const formData = new FormData()
+        formData.append('file', fileToUpload)
+        const req = await fetch('/api/photos', {
+            method: 'POST',
+            body: formData
+        })
+        if (!req.ok){
+            throw Error
+        }
+        return req
+    }catch(e){
+        console.log(e)
+    }
+}
+
 module.exports ={
-    getAll
+    getAll,
+    upload
 }
