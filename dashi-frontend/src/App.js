@@ -6,10 +6,24 @@ import Upload from './components/Upload'
 import { getAll, upload } from './service/photoService'
 const s3base = `https://tadashi-img-bucket.s3.amazonaws.com/`
 
+
 const App = () => {
   const [name, setName] = useState('')
   const [photos, setPhotos] = useState([])
   const [selectedFile, setFile] = useState(null)
+  const {isAuthenticated} = useAuth0()
+  
+  //async/await method for getting photos
+  const getPhotos = async () => {
+    let picArr = []
+    try{
+      const pics = await getAll()
+      pics.Contents.map(x => picArr.push(x.Key))
+      setPhotos(picArr)
+    }catch(e){
+      console.log('no photos')
+    }
+  }
 
   const nickNames = [
     'Ning sa baby', 'Tarduncle',
@@ -17,7 +31,6 @@ const App = () => {
     'Dashiki', 'Tada!'
   ]
 
-  const {isAuthenticated} = useAuth0()
 
   // useEffect to randomly get nickname out of names :)
   useEffect(() => {
@@ -25,17 +38,9 @@ const App = () => {
   }, [])
 
   // creates an array of object keys from S3 bucket then pushes that to photos state
+  // This just initially grabs 
   useEffect(() => {
-    ;(async () => {
-      let picArr = []
-      try{
-        const pics = await getAll()
-        pics.Contents.map(x => picArr.push(x.Key))
-        setPhotos(picArr)
-      }catch(e){
-        console.log('no photos')
-      }
-    })()
+    getPhotos()
   },[])
 
   const getFile = (e) => {
@@ -49,19 +54,8 @@ const App = () => {
       setFile(null)
       
       // Fetch updated photos from s3 bucket
-      // kinda ugly :(
       setTimeout(() => {
-        ;(async () => {
-          let picArr = []
-          try{
-            const pics = await getAll()
-            pics.Contents.map(x => picArr.push(x.Key))
-            setPhotos(picArr)
-          }catch(e){
-            console.log('no photos')
-          }
-        })()
-        console.log(photos)
+        getPhotos()
       },4000)
 
     }catch(e){

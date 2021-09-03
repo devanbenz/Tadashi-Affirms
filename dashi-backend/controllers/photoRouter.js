@@ -12,31 +12,6 @@ const bucketParams = {
     Bucket: 'tadashi-img-bucket',
 }
 
-const uploadParams = {
-    Bucket: 'tadashi-img-raw',
-    Key: '', Body: ''
-}
-
-
-// Create multer storage Object, sets destination file to uploads 
-const storage = multer.diskStorage({
-    destination: multerS3({
-        s3: s3,
-        bucket: 'tadashi-img-raw',
-        metadata: function (req, file, cb){
-            cb(null, {fieldName: file.fieldname})
-        },
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString())
-        }
-    }),
-    // THIS PART ENSURES THE FILE WILL BE .png|.jpg|.jpeg and not a binary file
-    filename: (req, file, cb) => {
-        const fileName = file.originalname.toLowerCase().split(' ').join('-');
-        cb(null, uuidv4() + '-' + fileName)
-    }
-});
-
 const upload = multer({
     storage:multerS3({
         s3: s3,
@@ -68,8 +43,7 @@ photoRouter.get('/', async (req, res) => {
 })
 
 photoRouter.post('/', upload.single('file') ,(req, res) => {
-    console.log(req.file)
-    res.send('console')
+    res.status(200).end()
 })
 
 
