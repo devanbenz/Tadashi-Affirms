@@ -8,9 +8,10 @@ We both love our cat very much so I am creating a SPA gallary that has pictures 
 
 *done* 🤩
 - auth0 login
+- Add user upload for pictures
+- Connect backend -- AWS used for photo storage
+
 
 *todos* ✍️
-- Add user upload for pictures
-- Connect backend -- add database for uploads (mongo maybe idk)
 - Create gallary out of user uploads
 - Style with CSS
