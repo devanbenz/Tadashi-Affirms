@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 import './App.css'
 import TitleBar from './components/TitleBar'
+import Upload from './components/Upload'
 import { getAll, upload } from './service/photoService'
 const s3base = `https://tadashi-img-bucket.s3.amazonaws.com/`
 
@@ -14,6 +16,8 @@ const App = () => {
     'Tarunchy Crunch',  'Tadashi',
     'Dashiki', 'Tada!'
   ]
+
+  const {isAuthenticated} = useAuth0()
 
   // useEffect to randomly get nickname out of names :)
   useEffect(() => {
@@ -43,6 +47,23 @@ const App = () => {
     try{
       upload(selectedFile)
       setFile(null)
+      
+      // Fetch updated photos from s3 bucket
+      // kinda ugly :(
+      setTimeout(() => {
+        ;(async () => {
+          let picArr = []
+          try{
+            const pics = await getAll()
+            pics.Contents.map(x => picArr.push(x.Key))
+            setPhotos(picArr)
+          }catch(e){
+            console.log('no photos')
+          }
+        })()
+        console.log(photos)
+      },4000)
+
     }catch(e){
       console.log(e)
     }
@@ -55,14 +76,12 @@ const App = () => {
       </div>
     )
   }
+  console.log(isAuthenticated)
 
   return (
     <div>
       <TitleBar name={name} />
-      <form encType='multipart/form-data'>
-        <input type='file' name='photo' onChange={getFile}></input>
-        <button onClick={uploadFile} >upload</button>
-      </form>
+      {isAuthenticated && <Upload getFile={getFile} uploadFile={uploadFile} />}
       {photos.map(x => <img className='sml' key={x} src={s3base+x} />)}
     </div>
   )
