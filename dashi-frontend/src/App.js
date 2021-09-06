@@ -70,7 +70,6 @@ const App = () => {
       </div>
     )
   }
-  console.log(isAuthenticated)
 
   return (
     <div>
